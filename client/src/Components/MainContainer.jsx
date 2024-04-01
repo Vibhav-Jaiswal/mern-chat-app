@@ -6,7 +6,7 @@ import ChatArea from "./ChatArea";
 const MainContainer = () => {
   return <div className="main-container">
     <Sidebar />
-    <ChatArea />
+    <ChatArea name="test1" timeStamp="online" />
   </div>;
 };
 
