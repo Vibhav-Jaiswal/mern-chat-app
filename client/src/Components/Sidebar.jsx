@@ -8,6 +8,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import NightlightIcon from "@mui/icons-material/Nightlight";
 import SearchIcon from "@mui/icons-material/Search";
 import ConversationsItem from "./ConversationsItem";
+import { Link, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const [conversations, setConversations] = useState([
@@ -27,6 +28,7 @@ const Sidebar = () => {
       timeStamp: "today",
     },
   ]);
+
   return (
     <div className="sidebar-container">
       <div className="sb-header">
@@ -37,15 +39,21 @@ const Sidebar = () => {
         </div>
 
         <div>
-          <IconButton>
-            <PersonAddIcon />
-          </IconButton>
-          <IconButton>
-            <GroupAddIcon />
-          </IconButton>
-          <IconButton>
-            <AddCircleIcon />
-          </IconButton>
+          <Link to="users">
+            <IconButton>
+              <PersonAddIcon />
+            </IconButton>
+          </Link>
+          <Link to="groups">
+            <IconButton>
+              <GroupAddIcon />
+            </IconButton>
+          </Link>
+          <Link to="create-groups">
+            <IconButton>
+              <AddCircleIcon />
+            </IconButton>
+          </Link>
           <IconButton>
             <NightlightIcon />
           </IconButton>
@@ -58,8 +66,10 @@ const Sidebar = () => {
         <input type="text" placeholder="search..." className="search-box" />
       </div>
       <div className="sb-conversations">
-        {conversations.map((conversation,i) => (
-          <ConversationsItem props={conversation} key={i} />
+        {conversations.map((conversation, i) => (
+          <Link to="chat" style={{ textDecoration: "none" }}>
+            <ConversationsItem props={conversation} key={i} />
+          </Link>
         ))}
       </div>
     </div>
