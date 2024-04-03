@@ -1,3 +1,13 @@
+.dark {
+  background-color: #2d3941 !important;
+  color: lightgray !important;
+}
+
+.icon {
+  width: 1.25em !important;
+  height: 1.25em !important;
+}
+
 .main-container {
   background-color: #f4f5f8;
   height: 90vh;
@@ -252,6 +262,7 @@ input:focus {
   border-radius: 20px;
   display: flex;
   justify-content: space-between;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 .login-container {
