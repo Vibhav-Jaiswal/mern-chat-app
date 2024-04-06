@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 
 const Welcome = () => {
   const lightTheme = useSelector((state) => state.theme);
+  const { currentUser } = useSelector((state) => state.user);
   return (
     <AnimatePresence>
       <motion.div
@@ -24,7 +25,7 @@ const Welcome = () => {
           alt="logo"
           className="welcome-logo"
         />
-        <b>Hi , Vibhav 👋</b>
+        <b>Hi , {currentUser.username} 👋</b>
         <p>View and text directly to people present in the chat Rooms.</p>
       </motion.div>
     </AnimatePresence>
