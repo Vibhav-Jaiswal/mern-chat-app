@@ -3,12 +3,13 @@ import logo from "../Images/live-chat_512px.png";
 import { Button, TextField } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { signInStart, signInSuccess, signInFailure } from "../Redux/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { loading, error } = useSelector((state) => state.user);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -16,7 +17,7 @@ const Login = () => {
 
   const handleSbmit = async () => {
     try {
-      dispatch(signInStart())
+      dispatch(signInStart());
       const res = await fetch("/api/auth/signin", {
         method: "post",
         headers: {
@@ -26,7 +27,7 @@ const Login = () => {
       });
       const data = await res.json();
       if (data.success === false) {
-        return dispatch(signInFailure(data.message))
+        return dispatch(signInFailure(data.message));
       } else {
         navigate("/app/welcome");
         dispatch(signInSuccess(data));
@@ -57,11 +58,14 @@ const Login = () => {
           onChange={handleChange}
         />
         <Button onClick={handleSbmit} variant="outlined">
-          Login
+          {loading ? "Loging in..." : "Login"}
         </Button>
         <div className="account-check">
           <span>Already have an account?</span>
           <Link to="/">Signup</Link>
+        </div>
+        <div className="error">
+          <span>{error && error}</span>
         </div>
       </div>
     </div>

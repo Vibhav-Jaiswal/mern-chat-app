@@ -371,6 +371,10 @@ input:focus {
   text-decoration: underline;
 }
 
+.error {
+  color: red;
+}
+
 @media only screen and (max-width: 40em) {
   .sb-search {
     display: none;
