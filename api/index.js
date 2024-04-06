@@ -2,11 +2,13 @@ import express from "express";
 import dotenv from "dotenv";
 import userRouter from "./routes/auth.route.js";
 import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 9999;
 app.use(express.json());
+app.use(cookieParser());
 
 mongoose
   .connect(process.env.MONGO)
