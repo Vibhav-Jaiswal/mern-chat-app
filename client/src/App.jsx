@@ -8,6 +8,7 @@ import Users from "./Components/Users";
 import Groups from "./Components/Groups";
 import CreateGroups from "./Components/CreateGroups";
 import { useSelector } from "react-redux";
+import Signup from "./Components/Signup";
 
 const App = () => {
   const lightTheme = useSelector((state) => state.theme);
@@ -15,7 +16,8 @@ const App = () => {
     <div className={"app" + (lightTheme ? "" : "-dark")}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
           <Route path="app" element={<MainContainer />}>
             <Route path="welcome" element={<Welcome />} />
             <Route path="chat" element={<ChatArea />} />

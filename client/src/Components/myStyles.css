@@ -86,7 +86,6 @@ input:focus {
   background-color: #d9d9d9;
 }
 
-
 .con-icon {
   grid-area: 1/1/3/2;
 
@@ -119,15 +118,13 @@ input:focus {
   text-transform: capitalize;
 }
 
-.other-message-container .conversation-container:hover
-{
+.other-message-container .conversation-container:hover {
   background-color: white;
 }
 
-.other-message-container .con-lastMessage
-{
+.other-message-container .con-lastMessage {
   color: black;
-  font-size:medium;
+  font-size: medium;
   /* font-style: normal; */
   /* font-weight: bold; */
 }
@@ -265,7 +262,7 @@ input:focus {
   display: flex;
   justify-content: space-between;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
-  rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 
 .login-container {
@@ -362,6 +359,16 @@ input:focus {
   display: flex;
   flex: 1;
   justify-content: space-evenly;
+}
+
+.account-check a {
+  color: #3492f5;
+  text-decoration: none;
+  margin-left: 5px;
+}
+
+.account-check a:hover {
+  text-decoration: underline;
 }
 
 @media only screen and (max-width: 40em) {
