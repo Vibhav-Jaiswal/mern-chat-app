@@ -29,7 +29,7 @@ export const getAllUsers = async (req, resp, next) => {
     const users = await User.find(keyword).find({
       _id: { $ne: req.user._id },
     });
-    res.send(users);
+    resp.send(users);
   } catch (error) {
     next(error);
   }

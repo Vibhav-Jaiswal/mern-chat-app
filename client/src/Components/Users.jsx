@@ -1,12 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../Images/live-chat_512px.png";
 import { IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
 
 const Users = () => {
   const lightTheme = useSelector((state) => state.theme);
+  const { currentUser } = useSelector((state) => state.user);
+  const [users, setUsers] = useState([]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const res = await fetch(`/api/user/get-users/${currentUser._id}`);
+        const data = await res.json();
+        if (data.success === false) {
+          console.log(data.message);
+        } else {
+          setUsers(data);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    fetchUsers();
+  }, []);
   return (
     <AnimatePresence>
       <motion.div
@@ -30,18 +50,23 @@ const Users = () => {
           </IconButton>
           <input className={"search-box" + (lightTheme ? "" : " dark")} />
         </div>
-        <div className="ug-list">
-          <motion.div
-            whileHover={{ scale: 1.01 }}
-            whileTap={{ scale: 0.98 }}
-            className={"list-item" + (lightTheme ? "" : " dark")}
-          >
-            <p className={"con-icon" + (lightTheme ? "" : " dark")}>T</p>
-            <p className={"con-title" + (lightTheme ? "" : " dark")}>
-              Test-User
-            </p>
-          </motion.div>
-        </div>
+        {users &&
+          users.map((user) => (
+            <div className="ug-list" key={user._id}>
+              <motion.div
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.98 }}
+                className={"list-item" + (lightTheme ? "" : " dark")}
+              >
+                <p className={"con-icon" + (lightTheme ? "" : " dark")}>
+                  {user.username[0]}
+                </p>
+                <p className={"con-title" + (lightTheme ? "" : " dark")}>
+                  {user.username}
+                </p>
+              </motion.div>
+            </div>
+          ))}
       </motion.div>
     </AnimatePresence>
   );
