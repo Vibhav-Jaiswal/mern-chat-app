@@ -13,6 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../Redux/themeSlice";
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import { signoutSuccess } from "../Redux/userSlice";
 
 const Sidebar = () => {
   const [conversations, setConversations] = useState([
@@ -46,6 +47,7 @@ const Sidebar = () => {
       if(data.success === false){
         return dispatch(data.message);
       }else{
+        dispatch(signoutSuccess())
         navigate('/login');
       }
      } catch (error) {
