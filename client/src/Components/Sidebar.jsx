@@ -9,9 +9,10 @@ import NightlightIcon from "@mui/icons-material/Nightlight";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import SearchIcon from "@mui/icons-material/Search";
 import ConversationsItem from "./ConversationsItem";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../Redux/themeSlice";
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 const Sidebar = () => {
   const [conversations, setConversations] = useState([
@@ -32,12 +33,31 @@ const Sidebar = () => {
     },
   ]);
   const lightTheme = useSelector((state) => state.theme);
+  const {currentUser,error} = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogOut = async (id) =>{
+     try {
+      const res = await fetch(`/api/user/signout/${id}`,{
+        method:'post'
+      })
+      const data = await res.json(res);
+      if(data.success === false){
+        return dispatch(data.message);
+      }else{
+        navigate('/login');
+      }
+     } catch (error) {
+       dispatch(error.message)
+     }
+  }
+
   return (
     <div className="sidebar-container">
       <div className={"sb-header" + (lightTheme ? "" : " dark")}>
         <div>
-          <Link to='/app/welcome'>
+          <Link to="/app/welcome">
             <IconButton>
               <AccountCircleIcon
                 className={"icon" + (lightTheme ? "" : " dark")}
@@ -71,6 +91,9 @@ const Sidebar = () => {
             {!lightTheme && (
               <LightModeIcon className={"icon" + (lightTheme ? "" : " dark")} />
             )}
+          </IconButton>
+          <IconButton onClick={()=>handleLogOut(currentUser._id)}>
+            <ExitToAppIcon className={"icon" + (lightTheme ? "" : " dark")} />
           </IconButton>
         </div>
       </div>

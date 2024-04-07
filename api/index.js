@@ -1,8 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
-import userRouter from "./routes/auth.route.js";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
+import authRouter from "./routes/auth.route.js";
+import userRouter from "./routes/user.route.js";
 
 dotenv.config();
 const app = express();
@@ -16,7 +17,8 @@ mongoose
   .catch(() => console.log("Disconected from database"));
 
   
-app.use("/api/auth", userRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/user", userRouter);
 
 app.use((err, req, resp, next) => {
   const statusCode = err.statusCode || 500;
