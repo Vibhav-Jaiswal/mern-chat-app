@@ -88,6 +88,15 @@ export const createGroup = async (req, resp, next) => {
 
     resp.status(200).json(fullGroupChat);
   } catch (error) {
-    next(error)
+    next(error);
+  }
+};
+
+export const fetchGroup = async (req, resp, next) => {
+  try {
+    const allGroups = await Chat.where("isGroupChat").equals(true);
+    resp.status(200).json(allGroups);
+  } catch (error) {
+    next(error);
   }
 };
