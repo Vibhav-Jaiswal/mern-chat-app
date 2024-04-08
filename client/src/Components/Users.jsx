@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import logo from "../Images/live-chat_512px.png";
 import { IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
@@ -10,6 +10,7 @@ const Users = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [users, setUsers] = useState([]);
   const dispatch = useDispatch();
+  const { refresh, setRefresh } = useContext(myContext);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -26,7 +27,7 @@ const Users = () => {
       }
     };
     fetchUsers();
-  }, []);
+  }, [refresh]);
   return (
     <AnimatePresence>
       <motion.div
@@ -50,12 +51,13 @@ const Users = () => {
           </IconButton>
           <input className={"search-box" + (lightTheme ? "" : " dark")} />
         </div>
+        <div className="ug-list">
         {users &&
           users.map((user) => (
-            <div className="ug-list" key={user._id}>
               <motion.div
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.98 }}
+                key={user._id}
                 className={"list-item" + (lightTheme ? "" : " dark")}
               >
                 <p className={"con-icon" + (lightTheme ? "" : " dark")}>
@@ -65,8 +67,8 @@ const Users = () => {
                   {user.username}
                 </p>
               </motion.div>
-            </div>
           ))}
+          </div>
       </motion.div>
     </AnimatePresence>
   );
