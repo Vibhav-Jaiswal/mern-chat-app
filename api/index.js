@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import authRouter from "./routes/auth.route.js";
 import userRouter from "./routes/user.route.js";
 import chatRouter from "./routes/chat.route.js";
+import messageRouter from "./routes/message.route.js";
 
 dotenv.config();
 const app = express();
@@ -20,6 +21,7 @@ mongoose
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/chat", chatRouter);
+app.use("api/message",messageRouter);
 
 app.use((err, req, resp, next) => {
   const statusCode = err.statusCode || 500;
