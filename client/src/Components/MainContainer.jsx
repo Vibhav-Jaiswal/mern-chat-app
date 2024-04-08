@@ -1,17 +1,21 @@
-import React from "react";
+import React, { createContext, useState } from "react";
 import "./myStyles.css";
 import Sidebar from "./Sidebar";
 import { Outlet, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+export const myContext = createContext();
+
 const MainContainer = () => {
   const lightTheme = useSelector((state) => state.theme);
   const { currentUser } = useSelector((state) => state.user);
+  const [refresh, setRefresh] = useState(true);
+
   return currentUser ? (
-    <div className={"main-container" + (lightTheme ? "" : " dark")}>
+    <myContext.Provider value={{ refresh: refresh, setRefresh: setRefresh }}>
       <Sidebar />
       <Outlet />
-    </div>
+    </myContext.Provider>
   ) : (
     <Navigate to="/login" />
   );

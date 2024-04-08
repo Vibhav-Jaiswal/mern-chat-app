@@ -4,6 +4,8 @@ import { IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
+import { refreshSidebar } from "../Redux/refreshSidebar";
+import { myContext } from "./MainContainer";
 
 const Users = () => {
   const lightTheme = useSelector((state) => state.theme);
@@ -52,8 +54,8 @@ const Users = () => {
           <input className={"search-box" + (lightTheme ? "" : " dark")} />
         </div>
         <div className="ug-list">
-        {users &&
-          users.map((user) => (
+          {users &&
+            users.map((user) => (
               <motion.div
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.98 }}
@@ -67,8 +69,8 @@ const Users = () => {
                   {user.username}
                 </p>
               </motion.div>
-          ))}
-          </div>
+            ))}
+        </div>
       </motion.div>
     </AnimatePresence>
   );
