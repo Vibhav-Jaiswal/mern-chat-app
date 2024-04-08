@@ -66,11 +66,28 @@ export const fetchChat = async (req, resp, next) => {
 };
 
 export const createGroup = async (req, resp, next) => {
-    try {
-        const allGroups = await Chat.where("isGroupChat").equals(true);
-        resp.status(200).json(allGroups);
-      } catch (error) {
-        next(error)
-      }
-}
+  if (!req.body.users || !req.body.name) {
+    return resp.status(400).json({ message: "Data is insufficient" });
+  }
 
+  var users = JSON.parse(req.body.users);
+  console.log("chatController/createGroups : ", req);
+  users.push(req.user);
+
+  try {
+    const groupChat = await Chat.create({
+      chatName: req.body.name,
+      users: users,
+      isGroupChat: true,
+      groupAdmin: req.user,
+    });
+
+    const fullGroupChat = await Chat.findOne({ _id: groupChat._id })
+      .populate("users", "-password")
+      .populate("groupAdmin", "-password");
+
+    resp.status(200).json(fullGroupChat);
+  } catch (error) {
+    next(error)
+  }
+};
