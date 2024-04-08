@@ -5,6 +5,7 @@ import {
   fetchChat,
   createGroup,
   fetchGroup,
+  groupExit
 } from "../controllers/chat.controller.js";
 
 const router = express.Router();
@@ -12,6 +13,7 @@ const router = express.Router();
 router.post("/", verifyToken, accessChat);
 router.get("/", verifyToken, fetchChat);
 router.post("/create-group", verifyToken, createGroup);
-router.post("/fetch-group", verifyToken, fetchGroup);
+router.get("/fetch-group", verifyToken, fetchGroup);
+router.put("/group-exit", verifyToken, groupExit);
 
 export default router;

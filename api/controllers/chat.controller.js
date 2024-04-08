@@ -100,3 +100,27 @@ export const fetchGroup = async (req, resp, next) => {
     next(error);
   }
 };
+
+export const groupExit = async (req, resp, next) => {
+  const { chatId, userId } = req.body;
+
+  // check if the requester is admin
+
+  const removed = await Chat.findByIdAndUpdate(
+    chatId,
+    {
+      $pull: { users: userId },
+    },
+    {
+      new: true,
+    }
+  )
+    .populate("users", "-password")
+    .populate("groupAdmin", "-password");
+
+  if (!removed) {
+    return next(errorHandler(404, "Chat Not Found!!"));
+  } else {
+    resp.json(removed);
+  }
+};
